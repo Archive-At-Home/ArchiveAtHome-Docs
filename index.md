@@ -8,11 +8,11 @@ hero:
   tagline: 搭建进行中
   actions:
     - theme: brand
-      text: 项目介绍
-      link: docs/home
+      text: 平台概览
+      link: /docs/guide/overview
     - theme: alt
-      text: API 接入方法
-      link: docs/server-api
+      text: API 文档
+      link: /docs/api/server
 
 features:
   - title: 文档页面建设进行中

@@ -41,7 +41,7 @@ cp config.yaml.example config.yaml
 ```yaml
 # 服务器配置
 server:
-  url: "ws://localhost:8080/ws"  # Server WebSocket 地址
+  url: "wss://api.archive-at-home.org/ws"  # Server WebSocket 地址
 
 # 节点配置（联系管理员获取）
 node:
@@ -50,8 +50,7 @@ node:
 
 # E-Hentai 配置
 ehentai:
-  cookie: "your-exhentai-cookie"  # ExHentai Cookie
-  use_exhentai: true              # 是否使用 exhentai.org
+  cookie: "your-ehentai-cookie"   # E-Hentai Cookie
   max_gp_cost: -1                 # 每日 GP 上限（-1 表示不限制）
 
 # 任务策略配置
@@ -61,7 +60,7 @@ task:
 
 # 数据库配置
 database:
-  path: "./data/ehentai.db"       # SQLite 数据库路径
+  path: "./data/db.db"       # SQLite 数据库路径
 
 # Dashboard 配置
 dashboard:
@@ -111,9 +110,9 @@ archive-at-home-node.exe
 ### E-Hentai 配置
 
 - `cookie`: E-Hentai/ExHentai 的完整 Cookie 字符串
-  - 登录 exhentai.org 后，从浏览器复制完整 Cookie
-  - 至少需要包含 `ipb_member_id` 和 `ipb_pass_hash`
-- `use_exhentai`: 是否使用 exhentai.org（推荐 true，访问受限画廊）
+  - 登录 e-hentai.org 后从浏览器复制，至少包含 `ipb_member_id` 和 `ipb_pass_hash`
+  - 系统自动选择可用站点，无需手动指定
+  - 对于非捐赠用户，若系统无法自动获取 igneous，则需补充 `igneous=xxx`
 - `max_gp_cost`: 每日 GP 消耗上限（`-1` 表示不限制）
 
 ### 任务策略配置
@@ -123,7 +122,7 @@ archive-at-home-node.exe
 
 ### 数据库配置
 
-- `path`: SQLite 数据库路径（例如 `./data/ehentai.db`）
+- `path`: SQLite 数据库路径（例如 `./data/db.db`）
 
 ### Dashboard 配置
 
@@ -136,7 +135,7 @@ archive-at-home-node.exe
 
 | 消息类型 | 说明 | Payload |
 |---------|------|---------|
-| `TASK_ANNOUNCEMENT` | 任务广播 | `{trace_id, free_tier, estimated_gp, queue_len}` |
+| `TASK_ANNOUNCEMENT` | 任务广播 | `{trace_id, free_tier, estimated_gp}` |
 | `TASK_ASSIGNED` | 任务分配 | `{trace_id, gallery_id, gallery_key}` |
 | `TASK_GONE` | 任务已被抢占 | `{trace_id}` |
 
@@ -146,6 +145,7 @@ archive-at-home-node.exe
 |---------|------|---------|
 | `FETCH_TASK` | 抢占任务 | `{trace_id, node_id}` |
 | `TASK_RESULT` | 任务结果 | `{trace_id, node_id, success, actual_gp, archive_url, error}` |
+| `NODE_STATUS` | 节点状态汇报（周期性） | `{have_free_quota, gp_balance}` |
 
 ## 任务执行流程
 
@@ -164,12 +164,12 @@ Node 使用 SQLite 本地数据库存储解析记录：
 ```
 node/
 └── data/
-    └── ehentai.db  # SQLite 数据库
+    └── db.db  # SQLite 数据库
 ```
 
 **表结构**：
 - `parse_logs`: 解析记录
-  - `id`: 自增主键
+  - `id`: 文本主键（任务 `trace_id`）
   - `gid`: 画廊 ID
   - `token`: 画廊 token
   - `actual_gp`: 实际 GP 消耗
