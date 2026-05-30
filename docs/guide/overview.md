@@ -39,6 +39,7 @@ docker-compose up -d
 # 解析归档链接（使用返回的 api_key）
 curl -X POST https://api.archive-at-home.org/api/v1/parse \
   -H "Authorization: Bearer sk-xxxxxxxxxxxx" \
+  -H "X-Client: bot/tg-official" \
   -H "Content-Type: application/json" \
   -d '{"gallery_id":"3858751","gallery_key":"d3de60e849"}'
 ```

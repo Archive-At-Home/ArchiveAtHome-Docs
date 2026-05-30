@@ -249,6 +249,19 @@ paths:
       summary: 请求解析画廊的归档下载链接
       security:
         - BearerAuth: []
+      parameters:
+        - name: X-Client
+          in: header
+          required: false
+          schema:
+            type: string
+            maxLength: 64
+          description: |
+            客户端标识。第三方应用需提供，私有脚本可不填。
+
+            仅接受 `a-z`、`0-9`、`-`、`_`、`.` 和单个 `/`
+
+            推荐格式：`大类/应用标识`，例如 `bot/tg-official`、`tampermonkey/aah-download-helper`、`app/jhentai`。
       requestBody:
         required: true
         content:
