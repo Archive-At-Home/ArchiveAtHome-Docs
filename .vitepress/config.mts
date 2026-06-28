@@ -36,7 +36,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'telegram', link: 'https://t.me/ArchiveAtHome' },
-      { icon: 'github', link: 'https://github.com/Archive-At-Home/ArchiveAtHome-Web' }
+      { icon: 'github', link: 'https://github.com/Archive-At-Home/archive-at-home' }
     ]
   }
 })
