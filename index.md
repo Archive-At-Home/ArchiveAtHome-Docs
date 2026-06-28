@@ -6,6 +6,9 @@ hero:
   name: "Archive-At-Home"
   text: "让归档更简单"
   tagline: 搭建进行中
+  image:
+    src: /hero-placeholder.svg
+    alt: Archive-At-Home 文档
   actions:
     - theme: brand
       text: 平台概览
