@@ -40,10 +40,9 @@ components:
         status:
           type: string
           example: active
-        last_checkin_at:
-          type: string
-          format: date-time
-          nullable: true
+        level:
+          type: integer
+          example: 0
         last_used_at:
           type: string
           format: date-time
@@ -67,22 +66,6 @@ components:
         balance:
           type: integer
           example: 900
-
-    CheckinResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        reward:
-          type: integer
-          example: 120
-        balance:
-          type: integer
-          example: 1020
-        message:
-          type: string
-          example: 签到成功
 
     ResetKeyResponse:
       type: object
@@ -135,7 +118,7 @@ components:
       properties:
         error:
           type: string
-          example: insufficient balance
+          example: rate limited, try again later
 
     AuthErrorResponse:
       type: object
@@ -162,28 +145,6 @@ components:
                 error: invalid api key
 
 paths:
-  /auth/telegram/login:
-    get:
-      summary: Telegram 第三方登录中转页面
-      parameters:
-        - name: redirect_url
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uri
-          description: 登录成功后跳转地址
-        - name: param_name
-          in: query
-          required: false
-          schema:
-            type: string
-            default: start
-          description: API Key 参数名
-      responses:
-        '302':
-          description: 重定向到目标地址
-
   /api/v1/me:
     get:
       summary: 获取当前用户信息和余额
@@ -216,7 +177,7 @@ paths:
 
   /api/v1/me/balance:
     get:
-      summary: 获取 GP 余额
+      summary: 获取当前令牌数量（GP 余额）
       security:
         - BearerAuth: []
       responses:
@@ -226,21 +187,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-
-  /api/v1/me/checkin:
-    post:
-      summary: 每日签到，获取随机 GP 奖励（每天一次）
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: 成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CheckinResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
 
