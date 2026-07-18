@@ -6,6 +6,11 @@ export default defineConfig({
   description: 'Archive-at-Home documentation site',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    docFooter: {
+      prev: '上一页',
+      next: '下一页'
+    },
+
     nav: [
       { text: '主页', link: '/' },
       { text: '平台概览', link: '/docs/guide/overview' },

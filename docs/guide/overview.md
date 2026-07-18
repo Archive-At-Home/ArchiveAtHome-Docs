@@ -1,3 +1,9 @@
+---
+sidebar: false
+aside: false
+footer: false
+---
+
 # Archive-at-Home
 
 Archive-at-Home 是一个 e-hentai 归档链接解析平台。

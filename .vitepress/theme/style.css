@@ -43,9 +43,49 @@ body {
 }
 
 .VPNav {
+  z-index: 100001;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.VPNavBar {
   background: rgba(2, 6, 23, 0.68);
   backdrop-filter: blur(18px);
+}
+
+.VPNavScreen {
+  z-index: 100000;
+  background: #020617;
+}
+
+.VPLocalNav {
+  display: none;
+}
+
+.VPSidebar,
+.VPDoc .aside {
+  display: none !important;
+}
+
+@media (min-width: 960px) {
+  .VPContent:not(.is-home),
+  .VPContent.has-sidebar {
+    padding-left: 288px !important;
+    padding-right: 0 !important;
+  }
+
+  .VPDoc.has-sidebar .content,
+  .VPDoc.has-aside .content,
+  .VPDoc:not(.has-sidebar) .content {
+    max-width: 100%;
+    padding-inline: 40px;
+  }
+
+  .VPDoc.has-sidebar .content-container,
+  .VPDoc.has-aside .content-container,
+  .VPDoc:not(.has-sidebar) .content-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
 }
 
 .VPNavBar.has-sidebar .content,
@@ -59,6 +99,18 @@ body {
   background: linear-gradient(90deg, #ffffff, #cbd5e1);
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.VPNavBarTitle.has-sidebar .title {
+  border-bottom-color: transparent !important;
+}
+
+.api-reference-page .VPContent,
+.api-reference-page .VPPage,
+.api-reference-page .UnifiedLocalNav {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
 }
 
 .VPNavBarTitle .logo {
@@ -187,6 +239,7 @@ body {
   content: "文档";
   position: absolute;
   inset: 42px;
+  pointer-events: none;
   display: grid;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -207,6 +260,7 @@ body {
   position: absolute;
   right: 18px;
   bottom: 42px;
+  pointer-events: none;
   padding: 9px 13px;
   border: 1px solid rgba(129, 140, 248, 0.34);
   border-radius: 999px;
@@ -279,6 +333,39 @@ body {
 }
 
 @media (max-width: 640px) {
+  .vp-doc div[class*="language-"] {
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 8px;
+  }
+
+  .vp-doc div[class*="language-"] pre {
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.6;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vp-doc div[class*="language-"] code {
+    white-space: pre;
+    overflow-wrap: normal;
+  }
+
+  .vp-doc :not(pre) > code {
+    font-size: 0.88em;
+    overflow-wrap: anywhere;
+  }
+
+  .vp-doc blockquote {
+    margin-right: 0;
+    margin-left: 0;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
   .VPHomeHero {
     padding: 64px 20px 34px;
   }

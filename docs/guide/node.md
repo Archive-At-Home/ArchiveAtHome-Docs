@@ -1,3 +1,9 @@
+---
+sidebar: false
+aside: false
+footer: false
+---
+
 # Archive-at-Home Node
 
 Archive-at-Home 分布式归档链接解析系统的工作节点。
